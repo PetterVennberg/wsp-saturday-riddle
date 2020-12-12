@@ -12,7 +12,7 @@ namespace WspSaturdayRiddleSolver
         {
             Console.Clear();
             Console.WriteLine("Choose an option:");
-            Console.WriteLine("1. WSP Saturday Riddle");
+            Console.WriteLine("1. Analyze WSP Saturday Riddle");
             Console.WriteLine("2. Exit");
 
             Console.Write("\nSelection: ");

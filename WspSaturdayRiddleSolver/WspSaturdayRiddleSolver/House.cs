@@ -10,6 +10,8 @@ namespace WspSaturdayRiddleSolver
     {
         public int Postition { get; set; }
         public string Color { get; set; }
-        public Person Owner { get; set; }
+        public string Owner { get; set; }
+        public string OwnerDrinks { get; set; }
+        public string OwnersPet { get; set; }
     }
 }
