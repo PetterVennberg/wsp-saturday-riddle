@@ -10,6 +10,12 @@ namespace WspSaturdayRiddleSolver
     {
         static void Main()
         {
+            while (true)
+            {
+                Menu.MainMenu();
+
+                Console.ReadLine();
+            }
 
         }
     }
