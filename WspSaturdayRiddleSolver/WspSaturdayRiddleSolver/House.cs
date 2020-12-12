@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace WspSaturdayRiddleSolver
 {
-    class Program
+    class House
     {
-        static void Main()
-        {
-
-        }
+        public int Postition { get; set; }
+        public string Color { get; set; }
+        public Person Owner { get; set; }
     }
 }
