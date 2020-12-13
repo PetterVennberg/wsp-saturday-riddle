@@ -20,6 +20,7 @@ namespace WspSaturdayRiddleSolver
             switch (Console.ReadLine())
             {
                 case "1":
+                    Solver.Run(5);
                     break;
 
                 case "2":
