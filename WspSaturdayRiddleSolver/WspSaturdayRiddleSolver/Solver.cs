@@ -10,7 +10,6 @@ namespace WspSaturdayRiddleSolver
     {
         public static void Run()
         {
-            int numberOfPossibleStreetCombinations = 120;
             List<House> houses = ImportHouses();
             List<string> owners = ImportOwners();
             List<string> colors = ImportColors();
@@ -18,7 +17,7 @@ namespace WspSaturdayRiddleSolver
             List<string> pets = ImportPets();
             List<string> newspapers = ImportNewspapers();
 
-            List<House> possibleCombinations = GetPossibleHouseCombinations(numberOfPossibleStreetCombinations, houses, owners, colors, drinks, pets, newspapers);
+            List<House> possibleCombinations = GetPossibleHouseCombinations(houses, owners, colors, drinks, pets, newspapers);
 
         }
 
@@ -99,39 +98,35 @@ namespace WspSaturdayRiddleSolver
             };
         }
 
-        private static List<House> GetPossibleHouseCombinations(int numberOfPossibleStreetCombinations, List<House> houses, List<string> owners, List<string> colors, List<string> drinks, List<string> pets, List<string> newspapers)
+        private static List<House> GetPossibleHouseCombinations(List<House> houses, List<string> owners, List<string> colors, List<string> drinks, List<string> pets, List<string> newspapers)
         {
             List<House> possibleCombinations = new List<House>();
             
             foreach (House house in houses)
             {
-                for (int i = 0; i < 120; i++)
+                foreach (string owner in owners)
                 {
-                    foreach (string owner in owners)
+                    foreach (string color in colors)
                     {
-                        foreach (string color in colors)
+                        foreach (string drink in drinks)
                         {
-                            foreach (string drink in drinks)
+                            foreach (string pet in pets)
                             {
-                                foreach (string pet in pets)
+                                foreach (string newspaper in newspapers)
                                 {
-                                    foreach (string newspaper in newspapers)
+                                    House possibleCombination = new House
                                     {
-                                        House possibleCombination = new House
-                                        {
-                                            OnStreet = i + 1,
-                                            Adress = house.Adress,
-                                            Owner = owner,
-                                            Color = color,
-                                            OwnerDrinks = drink,
-                                            OwnersPet = pet,
-                                            ReadsNewsPaper = newspaper
-                                        };
+                                        Adress = house.Adress,
+                                        Owner = owner,
+                                        Color = color,
+                                        OwnerDrinks = drink,
+                                        OwnersPet = pet,
+                                        ReadsNewsPaper = newspaper
+                                    };
 
-                                        if (AbsoluteConditionsAreMet(possibleCombination))
-                                        {
-                                            possibleCombinations.Add(possibleCombination);
-                                        }
+                                    if (AbsoluteConditionsAreMet(possibleCombination))
+                                    {
+                                        possibleCombinations.Add(possibleCombination);
                                     }
                                 }
                             }

@@ -8,7 +8,6 @@ namespace WspSaturdayRiddleSolver
 {
     class House
     {
-        public int OnStreet { get; set; }
         public int Adress { get; set; }
         public string Color { get; set; }
         public string Owner { get; set; }
