@@ -297,7 +297,34 @@ namespace WspSaturdayRiddleSolver
 
         private static void RelCondition15(List<House> possibleCombinations)
         {
-            
+            string newspaper = "Expressen";
+            string drink = "Green Tea";
+
+            int firstHouseWithExpressen = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals(newspaper)).Min(h => h.Adress);
+            int lastHouseWithExpressen = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals(newspaper)).Max(h => h.Adress);
+
+            int firstHouseWithGreenTea = possibleCombinations.Where(h => h.OwnerDrinks.Equals(drink)).Min(h => h.Adress);
+            int lastHouseWithGreenTea = possibleCombinations.Where(h => h.OwnerDrinks.Equals(drink)).Max(h => h.Adress);
+
+            if (lastHouseWithExpressen > lastHouseWithGreenTea + 1)
+            {
+                possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals(newspaper) && h.Adress == lastHouseWithExpressen);
+            }
+
+            if (lastHouseWithGreenTea > lastHouseWithExpressen + 1)
+            {
+                possibleCombinations.RemoveAll(h => h.OwnerDrinks.Equals(drink) && h.Adress == lastHouseWithGreenTea);
+            }
+
+            if (firstHouseWithExpressen < firstHouseWithGreenTea - 1)
+            {
+                possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals(newspaper) && h.Adress == firstHouseWithExpressen);
+            }
+
+            if (firstHouseWithGreenTea < firstHouseWithExpressen - 1)
+            {
+                possibleCombinations.RemoveAll(h => h.OwnerDrinks.Equals(drink) && h.Adress == firstHouseWithGreenTea);
+            }
         }
 
         private static void PetAndNewspaperAsNeighbours(List<House> possibleCombinations, string pet, string newspaper)
