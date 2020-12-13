@@ -10,6 +10,7 @@ namespace WspSaturdayRiddleSolver
     {
         public static void Run()
         {
+            int numberOfPossibleStreetCombinations = 120;
             List<House> houses = ImportHouses();
             List<string> owners = ImportOwners();
             List<string> colors = ImportColors();
@@ -17,7 +18,7 @@ namespace WspSaturdayRiddleSolver
             List<string> pets = ImportPets();
             List<string> newspapers = ImportNewspapers();
 
-            List<House> possibleCombinations = GetPossibleCombinations(houses, owners, colors, drinks, pets, newspapers);
+            List<House> possibleCombinations = GetPossibleHouseCombinations(numberOfPossibleStreetCombinations, houses, owners, colors, drinks, pets, newspapers);
 
         }
 
@@ -27,7 +28,7 @@ namespace WspSaturdayRiddleSolver
 
             for (int i = 0; i < 5; i++)
             {
-                houses.Add(new House() { Postition = i + 1 });
+                houses.Add(new House() { Adress = i + 1 });
             }
 
             return houses;
@@ -98,36 +99,39 @@ namespace WspSaturdayRiddleSolver
             };
         }
 
-        private static List<House> GetPossibleCombinations(List<House> houses, List<string> owners, List<string> colors, List<string> drinks, List<string> pets, List<string> newspapers)
+        private static List<House> GetPossibleHouseCombinations(int numberOfPossibleStreetCombinations, List<House> houses, List<string> owners, List<string> colors, List<string> drinks, List<string> pets, List<string> newspapers)
         {
             List<House> possibleCombinations = new List<House>();
-
-
+            
             foreach (House house in houses)
             {
-                foreach (string owner in owners)
+                for (int i = 0; i < 120; i++)
                 {
-                    foreach (string color in colors)
+                    foreach (string owner in owners)
                     {
-                        foreach (string drink in drinks)
+                        foreach (string color in colors)
                         {
-                            foreach (string pet in pets)
+                            foreach (string drink in drinks)
                             {
-                                foreach (string newspaper in newspapers)
+                                foreach (string pet in pets)
                                 {
-                                    House possibleCombination = new House
+                                    foreach (string newspaper in newspapers)
                                     {
-                                        Postition = house.Postition,
-                                        Owner = owner,
-                                        Color = color,
-                                        OwnerDrinks = drink,
-                                        OwnersPet = pet,
-                                        ReadsNewsPaper = newspaper
-                                    };
+                                        House possibleCombination = new House
+                                        {
+                                            OnStreet = i + 1,
+                                            Adress = house.Adress,
+                                            Owner = owner,
+                                            Color = color,
+                                            OwnerDrinks = drink,
+                                            OwnersPet = pet,
+                                            ReadsNewsPaper = newspaper
+                                        };
 
-                                    if (AbsoluteConditionsAreMet(possibleCombination))
-                                    {
-                                        possibleCombinations.Add(possibleCombination);
+                                        if (AbsoluteConditionsAreMet(possibleCombination))
+                                        {
+                                            possibleCombinations.Add(possibleCombination);
+                                        }
                                     }
                                 }
                             }
@@ -228,7 +232,7 @@ namespace WspSaturdayRiddleSolver
 
         private static bool Condition8(House house)
         {
-            if (house.Postition.Equals(3) &&
+            if (house.Adress.Equals(3) &&
                 house.OwnerDrinks.Equals("Milk"))
             {
                 return true;
@@ -239,7 +243,7 @@ namespace WspSaturdayRiddleSolver
 
         private static bool Condition9(House house)
         {
-            if (house.Postition.Equals(1) &&
+            if (house.Adress.Equals(1) &&
                 house.Owner.Equals("Henrik"))
             {
                 return true;
