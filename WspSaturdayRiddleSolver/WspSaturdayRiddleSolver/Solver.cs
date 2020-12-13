@@ -145,14 +145,20 @@ namespace WspSaturdayRiddleSolver
             // WIP Need to find assesment if true
             while (true)
             {
+                int initailCount = possibleCombinations.Count;
+                
                 RelCondition4(possibleCombinations);
                 RelCondition10(possibleCombinations);
                 RelCondition11(possibleCombinations);
                 RelCondition14(possibleCombinations);
                 RelCondition15(possibleCombinations);
 
+                if (possibleCombinations.Count == initailCount)
+                {
+                    break;
+                }
+
             }
-            
             
         }
 
