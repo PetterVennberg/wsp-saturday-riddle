@@ -10,7 +10,7 @@ namespace WspSaturdayRiddleSolver
     {
         public static void Run(int numberOfCollections)
         {
-            List<House> houses = CreateHouses(numberOfCollections);
+            List<House> houses = ImportHouses();
             List<string> owners = ImportOwners();
             List<string> colors = ImportColors();
             List<string> drinks = ImportDrinks();
@@ -19,15 +19,13 @@ namespace WspSaturdayRiddleSolver
 
             List<House> possibleCombinations = GetPossibleCombinations(houses, owners, colors, drinks, pets, newspapers);
 
-            AnalyzeData(possibleCombinations);
-
         }
 
-        private static List<House> CreateHouses(int numberOfCollections)
+        private static List<House> ImportHouses()
         {
             List<House> houses = new List<House>();
 
-            for (int i = 0; i < numberOfCollections; i++)
+            for (int i = 0; i < 5; i++)
             {
                 houses.Add(new House() { Postition = i + 1 });
             }
@@ -102,12 +100,8 @@ namespace WspSaturdayRiddleSolver
 
         private static List<House> GetPossibleCombinations(List<House> houses, List<string> owners, List<string> colors, List<string> drinks, List<string> pets, List<string> newspapers)
         {
-            double count = Math.Pow(houses.Count, 6);
             List<House> possibleCombinations = new List<House>();
 
-            //for (int i = 0; i < count; i++)
-            //{
-                //House possibleCombination = new House();
 
             foreach (House house in houses)
             {
@@ -141,7 +135,6 @@ namespace WspSaturdayRiddleSolver
                     }
                 }
             }
-            //}
 
             return possibleCombinations;
         }
@@ -277,13 +270,6 @@ namespace WspSaturdayRiddleSolver
             return false;
         }
 
-        private static void AnalyzeData(List<House> possibleCombinations)
-        {
-            foreach (House house in possibleCombinations)
-            {
-                
-            }
-        }
 
         //private static List<House> ImportAbsoluteInputParameters()
         //{
