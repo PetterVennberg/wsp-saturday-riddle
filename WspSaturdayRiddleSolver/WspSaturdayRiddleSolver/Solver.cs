@@ -19,6 +19,7 @@ namespace WspSaturdayRiddleSolver
 
             List<House> possibleCombinations = GetPossibleHouseCombinations(houses, owners, colors, drinks, pets, newspapers);
 
+            AnalyzeHouseData(possibleCombinations);
         }
 
         private static List<House> ImportHouses()
@@ -138,6 +139,17 @@ namespace WspSaturdayRiddleSolver
             return possibleCombinations;
         }
 
+        private static void AnalyzeHouseData(List<House> possibleCombinations)
+        {
+            // WIP Need to find assesment if true
+            while (true)
+            {
+                Condition4(possibleCombinations);
+            }
+            
+            
+        }
+
         private static bool AbsoluteConditionsAreMet(House house)
         {
             if (
@@ -190,6 +202,18 @@ namespace WspSaturdayRiddleSolver
             }
 
             return false;
+        }
+
+        private static void Condition4(List<House> possibleCombinations)
+        {
+            int highestAdressForWhite = possibleCombinations.Where(h => h.Color.Equals("White")).OrderByDescending(h => h.Adress).First().Adress;
+
+            List<House> invalidHouses = possibleCombinations.Where(h => h.Color.Equals("Green") && h.Adress >= highestAdressForWhite).ToList();
+
+            foreach (House house in invalidHouses)
+            {
+                possibleCombinations.Remove(house);
+            }
         }
 
         private static bool Condition5(House house)
@@ -247,6 +271,16 @@ namespace WspSaturdayRiddleSolver
             return false;
         }
 
+        private static void Condition10(List<House> possibleCombinations)
+        {
+            
+        }
+
+        private static void Condition11(List<House> possibleCombinations)
+        {
+            
+        }
+
         private static bool Condition12(House house)
         {
             if (house.ReadsNewsPaper.Equals("Dagens Nyheter") &&
@@ -268,6 +302,17 @@ namespace WspSaturdayRiddleSolver
 
             return false;
         }
+        
+        private static void Condition14(List<House> possibleCombinations)
+        {
+            
+        }
+
+        private static void Condition15(List<House> possibleCombinations)
+        {
+            
+        }
+
 
 
         //private static List<House> ImportAbsoluteInputParameters()
