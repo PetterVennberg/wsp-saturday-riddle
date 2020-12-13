@@ -29,7 +29,7 @@ namespace WspSaturdayRiddleSolver
 
             for (int i = 0; i < numberOfCollections; i++)
             {
-                houses.Add(new House() { Postition = i });
+                houses.Add(new House() { Postition = i + 1 });
             }
 
             return houses;
@@ -103,33 +103,37 @@ namespace WspSaturdayRiddleSolver
         private static List<House> GetPossibleCombinations(List<House> houses, List<string> owners, List<string> colors, List<string> drinks, List<string> pets, List<string> newspapers)
         {
             double count = Math.Pow(houses.Count, 6);
-            List<House> possibleConbinations = new List<House>();
+            List<House> possibleCombinations = new List<House>();
 
-            for (int i = 0; i < count; i++)
-            {
-                possibleConbinations.Add(new House());
-            }
+            //for (int i = 0; i < count; i++)
+            //{
+                //House possibleCombination = new House();
 
-            foreach (House possibleCombination in possibleConbinations)
+            foreach (House house in houses)
             {
-                foreach (House house in houses)
+                foreach (string owner in owners)
                 {
-                    foreach (string owner in owners)
+                    foreach (string color in colors)
                     {
-                        foreach (string color in colors)
+                        foreach (string drink in drinks)
                         {
-                            foreach (string drink in drinks)
+                            foreach (string pet in pets)
                             {
-                                foreach (string pet in pets)
+                                foreach (string newspaper in newspapers)
                                 {
-                                    foreach (string newspaper in newspapers)
+                                    House possibleCombination = new House
                                     {
-                                        possibleCombination.Postition = house.Postition;
-                                        possibleCombination.Owner = owner;
-                                        possibleCombination.Color = color;
-                                        possibleCombination.OwnerDrinks = drink;
-                                        possibleCombination.OwnersPet = pet;
-                                        possibleCombination.ReadsNewsPaper = newspaper;
+                                        Postition = house.Postition,
+                                        Owner = owner,
+                                        Color = color,
+                                        OwnerDrinks = drink,
+                                        OwnersPet = pet,
+                                        ReadsNewsPaper = newspaper
+                                    };
+
+                                    if (AbsoluteConditionsAreMet(possibleCombination))
+                                    {
+                                        possibleCombinations.Add(possibleCombination);
                                     }
                                 }
                             }
@@ -137,13 +141,148 @@ namespace WspSaturdayRiddleSolver
                     }
                 }
             }
+            //}
 
-            return possibleConbinations;
+            return possibleCombinations;
+        }
+
+        private static bool AbsoluteConditionsAreMet(House house)
+        {
+            if (
+                        Condition1(house) ||
+                        Condition2(house) ||
+                        Condition3(house) ||
+                        Condition5(house) ||
+                        Condition6(house) ||
+                        Condition7(house) ||
+                        Condition8(house) ||
+                        Condition9(house) ||
+                        Condition12(house) ||
+                        Condition13(house)
+                   )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool Condition1(House house)
+        {
+            if (house.Owner.Equals("Pär") &&
+                house.Color.Equals("Red"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+                                     
+        private static bool Condition2(House house)
+        {
+            if (house.Owner.Equals("Emma") &&
+                house.OwnersPet.Equals("Dogs"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+                                     
+        private static bool Condition3(House house)
+        {
+            if (house.Owner.Equals("Gustav") &&
+                house.OwnerDrinks.Equals("Vodka"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool Condition5(House house)
+        {
+            if (house.Color.Equals("Green") &&
+                house.OwnerDrinks.Equals("Coffe"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool Condition6(House house)
+        {
+            if (house.ReadsNewsPaper.Equals("Nyheter24") &&
+                house.OwnersPet.Equals("Eagle"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool Condition7(House house)
+        {
+            if (house.Color.Equals("Purple") &&
+                house.ReadsNewsPaper.Equals("Aftonbladet"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool Condition8(House house)
+        {
+            if (house.Postition.Equals(3) &&
+                house.OwnerDrinks.Equals("Milk"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool Condition9(House house)
+        {
+            if (house.Postition.Equals(1) &&
+                house.Owner.Equals("Henrik"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool Condition12(House house)
+        {
+            if (house.ReadsNewsPaper.Equals("Dagens Nyheter") &&
+                house.OwnerDrinks.Equals("Beer"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool Condition13(House house)
+        {
+            if (house.ReadsNewsPaper.Equals("Svenska Dagbladet") &&
+                house.Owner.Equals("Anton"))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private static void AnalyzeData(List<House> possibleCombinations)
         {
-            Console.ReadLine();
+            foreach (House house in possibleCombinations)
+            {
+                
+            }
         }
 
         //private static List<House> ImportAbsoluteInputParameters()
@@ -207,7 +346,7 @@ namespace WspSaturdayRiddleSolver
         //    //}
 
         //}
-        
+
         //private static void AnalyzeRelationalInput()
         //{
         //    // 4
