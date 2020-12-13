@@ -278,8 +278,8 @@ namespace WspSaturdayRiddleSolver
 
         private static bool Condition9(House house)
         {
-            if (house.Adress.Equals(1) &&
-                house.Owner.Equals("Henrik"))
+            if (house.Owner.Equals("Henrik") &&
+                house.Adress == 1)
             {
                 return true;
             }
@@ -321,7 +321,34 @@ namespace WspSaturdayRiddleSolver
         
         private static void Condition14(List<House> possibleCombinations)
         {
-            
+            string owner = "Henrik";
+            string color = "Blue";
+
+            int firstHouseForHenrik = possibleCombinations.Where(h => h.Owner.Equals(owner)).Min(h => h.Adress);
+            int lastHouseForHenrik = possibleCombinations.Where(h => h.Owner.Equals(owner)).Max(h => h.Adress);
+
+            int firstBlueHouse = possibleCombinations.Where(h => h.Color.Equals(color)).Min(h => h.Adress);
+            int lastBlueHouse = possibleCombinations.Where(h => h.Color.Equals(color)).Max(h => h.Adress);
+
+            if (lastHouseForHenrik > lastBlueHouse + 1)
+            {
+                possibleCombinations.RemoveAll(h => h.Owner.Equals(owner) && h.Adress == lastHouseForHenrik);
+            }
+
+            if (lastBlueHouse > lastHouseForHenrik + 1)
+            {
+                possibleCombinations.RemoveAll(h => h.OwnersPet.Equals(color) && h.Adress == lastBlueHouse);
+            }
+
+            if (firstHouseForHenrik < firstBlueHouse - 1)
+            {
+                possibleCombinations.RemoveAll(h => h.Owner.Equals(owner) && h.Adress == firstHouseForHenrik);
+            }
+
+            if (firstBlueHouse < firstHouseForHenrik - 1)
+            {
+                possibleCombinations.RemoveAll(h => h.OwnersPet.Equals(color) && h.Adress == firstBlueHouse);
+            }
         }
 
         private static void Condition15(List<House> possibleCombinations)
