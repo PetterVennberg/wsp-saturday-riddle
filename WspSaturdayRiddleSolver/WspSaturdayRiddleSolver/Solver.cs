@@ -125,10 +125,8 @@ namespace WspSaturdayRiddleSolver
                                         ReadsNewsPaper = newspaper
                                     };
 
-                                    if (AbsoluteConditionsAreMet(possibleCombination))
-                                    {
-                                        possibleCombinations.Add(possibleCombination);
-                                    }
+                                    possibleCombinations.Add(possibleCombination);
+
                                 }
                             }
                         }
@@ -141,75 +139,56 @@ namespace WspSaturdayRiddleSolver
 
         private static void AnalyzeHouseData(List<House> possibleCombinations)
         {
+            // Run Absolute 
+            VerifyAbsoluteConditions(possibleCombinations);
+
             // WIP Need to find assesment if true
             while (true)
             {
-                Condition4(possibleCombinations);
-                Condition10(possibleCombinations);
-                Condition11(possibleCombinations);
-                Condition14(possibleCombinations);
-                Condition15(possibleCombinations);
+                RelCondition4(possibleCombinations);
+                RelCondition10(possibleCombinations);
+                RelCondition11(possibleCombinations);
+                RelCondition14(possibleCombinations);
+                RelCondition15(possibleCombinations);
 
             }
             
             
         }
 
-        private static bool AbsoluteConditionsAreMet(House house)
+        private static void VerifyAbsoluteConditions(List<House> possibleCombinations)
         {
-            if (
-                        Condition1(house) ||
-                        Condition2(house) ||
-                        Condition3(house) ||
-                        Condition5(house) ||
-                        Condition6(house) ||
-                        Condition7(house) ||
-                        Condition8(house) ||
-                        Condition9(house) ||
-                        Condition12(house) ||
-                        Condition13(house)
-                   )
-            {
-                return true;
-            }
-
-            return false;
+            AbsCondition1(possibleCombinations);
+            AbsCondition2(possibleCombinations);
+            AbsCondition3(possibleCombinations);
+            AbsCondition5(possibleCombinations);
+            AbsCondition6(possibleCombinations);
+            AbsCondition7(possibleCombinations);
+            AbsCondition8(possibleCombinations);
+            AbsCondition9(possibleCombinations);
+            AbsCondition12(possibleCombinations);
+            AbsCondition13(possibleCombinations);
         }
 
-        private static bool Condition1(House house)
+        private static void AbsCondition1(List<House> possibleCombinations)
         {
-            if (house.Owner.Equals("Pär") &&
-                house.Color.Equals("Red"))
-            {
-                return true;
-            }
-
-            return false;
-        }
-                                     
-        private static bool Condition2(House house)
-        {
-            if (house.Owner.Equals("Emma") &&
-                house.OwnersPet.Equals("Dogs"))
-            {
-                return true;
-            }
-
-            return false;
-        }
-                                     
-        private static bool Condition3(House house)
-        {
-            if (house.Owner.Equals("Gustav") &&
-                house.OwnerDrinks.Equals("Vodka"))
-            {
-                return true;
-            }
-
-            return false;
+            possibleCombinations.RemoveAll(h => h.Owner.Equals("Pär") && !h.Color.Equals("Red"));
+            possibleCombinations.RemoveAll(h => !h.Owner.Equals("Pär") && h.Color.Equals("Red"));
         }
 
-        private static void Condition4(List<House> possibleCombinations)
+        private static void AbsCondition2(List<House> possibleCombinations)
+        {
+            possibleCombinations.RemoveAll(h => h.Owner.Equals("Emma") && !h.OwnersPet.Equals("Dogs"));
+            possibleCombinations.RemoveAll(h => !h.Owner.Equals("Emma") && h.OwnersPet.Equals("Dogs"));
+        }
+
+        private static void AbsCondition3(List<House> possibleCombinations)
+        {
+            possibleCombinations.RemoveAll(h => h.Owner.Equals("Gustav") && !h.OwnerDrinks.Equals("Vodka"));
+            possibleCombinations.RemoveAll(h => !h.Owner.Equals("Gustav") && h.OwnerDrinks.Equals("Vodka"));
+        }
+
+        private static void RelCondition4(List<House> possibleCombinations)
         {
             // Filter green
             int highestAdressForWhite = possibleCombinations.Where(h => h.Color.Equals("White")).Max(h => h.Adress);
@@ -232,94 +211,59 @@ namespace WspSaturdayRiddleSolver
             }
         }
 
-        private static bool Condition5(House house)
+        private static void AbsCondition5(List<House> possibleCombinations)
         {
-            if (house.Color.Equals("Green") &&
-                house.OwnerDrinks.Equals("Coffe"))
-            {
-                return true;
-            }
-
-            return false;
+            possibleCombinations.RemoveAll(h => h.Color.Equals("Green") && !h.OwnerDrinks.Equals("Coffe"));
+            possibleCombinations.RemoveAll(h => !h.Color.Equals("Green") && h.OwnerDrinks.Equals("Coffe"));
         }
 
-        private static bool Condition6(House house)
+        private static void AbsCondition6(List<House> possibleCombinations)
         {
-            if (house.ReadsNewsPaper.Equals("Nyheter24") &&
-                house.OwnersPet.Equals("Eagle"))
-            {
-                return true;
-            }
-
-            return false;
+            possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals("Nyheter24") && !h.OwnersPet.Equals("Eagle"));
+            possibleCombinations.RemoveAll(h => !h.ReadsNewsPaper.Equals("Nyheter24") && h.OwnersPet.Equals("Eagle"));
         }
 
-        private static bool Condition7(House house)
+        private static void AbsCondition7(List<House> possibleCombinations)
         {
-            if (house.Color.Equals("Purple") &&
-                house.ReadsNewsPaper.Equals("Aftonbladet"))
-            {
-                return true;
-            }
-
-            return false;
+            possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals("Aftonbladet") && !h.Color.Equals("Purple"));
+            possibleCombinations.RemoveAll(h => !h.ReadsNewsPaper.Equals("Aftonbladet") && h.Color.Equals("Purple"));
         }
 
-        private static bool Condition8(House house)
+        private static void AbsCondition8(List<House> possibleCombinations)
         {
-            if (house.Adress.Equals(3) &&
-                house.OwnerDrinks.Equals("Milk"))
-            {
-                return true;
-            }
-
-            return false;
+            possibleCombinations.RemoveAll(h => h.Adress.Equals(3) && !h.OwnerDrinks.Equals("Milk"));
+            possibleCombinations.RemoveAll(h => !h.Adress.Equals(3) && h.OwnerDrinks.Equals("Milk"));
         }
 
-        private static bool Condition9(House house)
+        private static void AbsCondition9(List<House> possibleCombinations)
         {
-            if (house.Owner.Equals("Henrik") &&
-                house.Adress == 1)
-            {
-                return true;
-            }
-
-            return false;
+            possibleCombinations.RemoveAll(h => h.Adress.Equals(1) && !h.Owner.Equals("Henrik"));
+            possibleCombinations.RemoveAll(h => !h.Adress.Equals(1) && h.Owner.Equals("Henrik"));
         }
 
-        private static void Condition10(List<House> possibleCombinations)
+        private static void RelCondition10(List<House> possibleCombinations)
         {
             PetAndNewspaperAsNeighbours(possibleCombinations, "Tiger", "Expressen");
         }
 
-        private static void Condition11(List<House> possibleCombinations)
+        private static void RelCondition11(List<House> possibleCombinations)
         {
             PetAndNewspaperAsNeighbours(possibleCombinations, "Horse", "Aftonbladet");
         }
 
-        private static bool Condition12(House house)
+        private static void AbsCondition12(List<House> possibleCombinations)
         {
-            if (house.ReadsNewsPaper.Equals("Dagens Nyheter") &&
-                house.OwnerDrinks.Equals("Beer"))
-            {
-                return true;
-            }
-
-            return false;
+            possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals("Dagens Nyheter") && !h.OwnerDrinks.Equals("Beer"));
+            possibleCombinations.RemoveAll(h => !h.ReadsNewsPaper.Equals("Dagens Nyheter") && h.OwnerDrinks.Equals("Beer"));
         }
 
-        private static bool Condition13(House house)
+        private static void AbsCondition13(List<House> possibleCombinations)
         {
-            if (house.ReadsNewsPaper.Equals("Svenska Dagbladet") &&
-                house.Owner.Equals("Anton"))
-            {
-                return true;
-            }
-
-            return false;
+            possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals("Svenska Dagbladet") && !h.Owner.Equals("Anton"));
+            possibleCombinations.RemoveAll(h => !h.ReadsNewsPaper.Equals("Svenska Dagbladet") && h.Owner.Equals("Anton"));
         }
-        
-        private static void Condition14(List<House> possibleCombinations)
+
+        private static void RelCondition14(List<House> possibleCombinations)
         {
             string owner = "Henrik";
             string color = "Blue";
@@ -351,7 +295,7 @@ namespace WspSaturdayRiddleSolver
             }
         }
 
-        private static void Condition15(List<House> possibleCombinations)
+        private static void RelCondition15(List<House> possibleCombinations)
         {
             
         }
