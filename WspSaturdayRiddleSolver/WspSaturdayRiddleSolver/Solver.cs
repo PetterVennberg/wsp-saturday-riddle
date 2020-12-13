@@ -289,36 +289,12 @@ namespace WspSaturdayRiddleSolver
 
         private static void Condition10(List<House> possibleCombinations)
         {
-            int firstHouseWithExpressen = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals("Expressen")).Min(h => h.Adress);
-            int lastHouseWithExpressen = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals("Expressen")).Max(h => h.Adress);
-
-            int firstHouseWithTiger = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals("Expressen")).Min(h => h.Adress);
-            int lastHouseWithTiger = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals("Expressen")).Max(h => h.Adress);
-
-            if (lastHouseWithExpressen > lastHouseWithTiger + 1)
-            {
-                possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals("Expressen") && h.Adress == lastHouseWithExpressen);
-            }
-
-            if (lastHouseWithTiger > lastHouseWithExpressen + 1)
-            {
-                possibleCombinations.RemoveAll(h => h.OwnersPet.Equals("Tiger") && h.Adress == lastHouseWithTiger);
-            }
-
-            if (firstHouseWithExpressen < firstHouseWithTiger - 1)
-            {
-                possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals("Expressen") && h.Adress == firstHouseWithExpressen);
-            }
-
-            if (firstHouseWithTiger < firstHouseWithExpressen - 1)
-            {
-                possibleCombinations.RemoveAll(h => h.OwnersPet.Equals("Tiger") && h.Adress == firstHouseWithTiger);
-            }
+            PetAndNewspaperAsNeighbours(possibleCombinations, "Tiger", "Expressen");
         }
 
         private static void Condition11(List<House> possibleCombinations)
         {
-            
+            PetAndNewspaperAsNeighbours(possibleCombinations, "Horse", "Aftonbladet");
         }
 
         private static bool Condition12(House house)
@@ -351,6 +327,35 @@ namespace WspSaturdayRiddleSolver
         private static void Condition15(List<House> possibleCombinations)
         {
             
+        }
+
+        private static void PetAndNewspaperAsNeighbours(List<House> possibleCombinations, string pet, string newspaper)
+        {
+            int firstHouseWithNewspaper = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals(newspaper)).Min(h => h.Adress);
+            int lastHouseWithNewspaper = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals(newspaper)).Max(h => h.Adress);
+
+            int firstHouseWithPet = possibleCombinations.Where(h => h.OwnersPet.Equals(pet)).Min(h => h.Adress);
+            int lastHouseWithPet = possibleCombinations.Where(h => h.OwnersPet.Equals(pet)).Max(h => h.Adress);
+
+            if (lastHouseWithPet > lastHouseWithNewspaper + 1)
+            {
+                possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals(newspaper) && h.Adress == lastHouseWithPet);
+            }
+
+            if (lastHouseWithNewspaper > lastHouseWithPet + 1)
+            {
+                possibleCombinations.RemoveAll(h => h.OwnersPet.Equals(pet) && h.Adress == lastHouseWithNewspaper);
+            }
+
+            if (firstHouseWithPet < firstHouseWithNewspaper - 1)
+            {
+                possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals(newspaper) && h.Adress == firstHouseWithPet);
+            }
+
+            if (firstHouseWithNewspaper < firstHouseWithPet - 1)
+            {
+                possibleCombinations.RemoveAll(h => h.OwnersPet.Equals(pet) && h.Adress == firstHouseWithNewspaper);
+            }
         }
 
 
