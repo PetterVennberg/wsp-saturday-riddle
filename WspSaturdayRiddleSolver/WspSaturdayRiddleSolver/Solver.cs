@@ -206,11 +206,22 @@ namespace WspSaturdayRiddleSolver
 
         private static void Condition4(List<House> possibleCombinations)
         {
+            // Filter green
             int highestAdressForWhite = possibleCombinations.Where(h => h.Color.Equals("White")).OrderByDescending(h => h.Adress).First().Adress;
 
-            List<House> invalidHouses = possibleCombinations.Where(h => h.Color.Equals("Green") && h.Adress >= highestAdressForWhite).ToList();
+            List<House> invalidGreenHouses = possibleCombinations.Where(h => h.Color.Equals("Green") && h.Adress >= highestAdressForWhite).ToList();
 
-            foreach (House house in invalidHouses)
+            foreach (House house in invalidGreenHouses)
+            {
+                possibleCombinations.Remove(house);
+            }
+
+            // Filter white
+            int lowestAdressForGreen = possibleCombinations.Where(h => h.Color.Equals("Green")).OrderBy(h => h.Adress).First().Adress;
+
+            List<House> invalidWhiteHouses = possibleCombinations.Where(h => h.Color.Equals("White") && h.Adress <= lowestAdressForGreen).ToList();
+
+            foreach (House house in invalidWhiteHouses)
             {
                 possibleCombinations.Remove(house);
             }
