@@ -8,7 +8,7 @@ namespace WspSaturdayRiddleSolver
 {
     class Solver
     {
-        public static void Run(int numberOfCollections)
+        public static void Run()
         {
             List<House> houses = ImportHouses();
             List<string> owners = ImportOwners();
