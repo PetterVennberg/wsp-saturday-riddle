@@ -145,6 +145,11 @@ namespace WspSaturdayRiddleSolver
             while (true)
             {
                 Condition4(possibleCombinations);
+                Condition10(possibleCombinations);
+                Condition11(possibleCombinations);
+                Condition14(possibleCombinations);
+                Condition15(possibleCombinations);
+
             }
             
             
@@ -207,7 +212,7 @@ namespace WspSaturdayRiddleSolver
         private static void Condition4(List<House> possibleCombinations)
         {
             // Filter green
-            int highestAdressForWhite = possibleCombinations.Where(h => h.Color.Equals("White")).OrderByDescending(h => h.Adress).First().Adress;
+            int highestAdressForWhite = possibleCombinations.Where(h => h.Color.Equals("White")).Max(h => h.Adress);
 
             List<House> invalidGreenHouses = possibleCombinations.Where(h => h.Color.Equals("Green") && h.Adress >= highestAdressForWhite).ToList();
 
@@ -217,7 +222,7 @@ namespace WspSaturdayRiddleSolver
             }
 
             // Filter white
-            int lowestAdressForGreen = possibleCombinations.Where(h => h.Color.Equals("Green")).OrderBy(h => h.Adress).First().Adress;
+            int lowestAdressForGreen = possibleCombinations.Where(h => h.Color.Equals("Green")).Min(h => h.Adress);
 
             List<House> invalidWhiteHouses = possibleCombinations.Where(h => h.Color.Equals("White") && h.Adress <= lowestAdressForGreen).ToList();
 
@@ -284,7 +289,31 @@ namespace WspSaturdayRiddleSolver
 
         private static void Condition10(List<House> possibleCombinations)
         {
-            
+            int firstHouseWithExpressen = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals("Expressen")).Min(h => h.Adress);
+            int lastHouseWithExpressen = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals("Expressen")).Max(h => h.Adress);
+
+            int firstHouseWithTiger = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals("Expressen")).Min(h => h.Adress);
+            int lastHouseWithTiger = possibleCombinations.Where(h => h.ReadsNewsPaper.Equals("Expressen")).Max(h => h.Adress);
+
+            if (lastHouseWithExpressen > lastHouseWithTiger + 1)
+            {
+                possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals("Expressen") && h.Adress == lastHouseWithExpressen);
+            }
+
+            if (lastHouseWithTiger > lastHouseWithExpressen + 1)
+            {
+                possibleCombinations.RemoveAll(h => h.OwnersPet.Equals("Tiger") && h.Adress == lastHouseWithTiger);
+            }
+
+            if (firstHouseWithExpressen < firstHouseWithTiger - 1)
+            {
+                possibleCombinations.RemoveAll(h => h.ReadsNewsPaper.Equals("Expressen") && h.Adress == firstHouseWithExpressen);
+            }
+
+            if (firstHouseWithTiger < firstHouseWithExpressen - 1)
+            {
+                possibleCombinations.RemoveAll(h => h.OwnersPet.Equals("Tiger") && h.Adress == firstHouseWithTiger);
+            }
         }
 
         private static void Condition11(List<House> possibleCombinations)
